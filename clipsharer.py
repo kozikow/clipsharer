@@ -15,6 +15,8 @@ logger = logging.getLogger("clipsharer")
 out = logging.StreamHandler(sys.stdout)
 logger.addHandler(out)
 
+mutex = threading.Lock()
+
 
 class ReceiverThread(threading.Thread):
   def __init__(self, socket):
