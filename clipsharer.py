@@ -24,6 +24,7 @@ class ReceiverThread(threading.Thread):
 
   def run(self):
     while True:
+      logger.debug("Waiting for clipboard on socket in recv.")
       new_clipboard = self.sock.recv(MAX_CLIPBOARD_SIZE)
       if (len(new_clipboard) == 0):
         self.socket.shutdown()
