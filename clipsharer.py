@@ -63,16 +63,16 @@ def run_server(hostname, port):
   while True:
     (clientsock, address) = sock.accept()
     logger.debug("Got new client")
-    SenderThread(clientsock).run()
-    ReceiverThread(clientsock).run()
+    SenderThread(clientsock).start()
+    ReceiverThread(clientsock).start()
 
 
 def run_client(hostname, port):
   sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   sock.connect((hostname, port))
   logger.debug("Connected to server")
-  SenderThread(sock).run()
-  ReceiverThread(sock).run()
+  SenderThread(sock).start()
+  ReceiverThread(sock).start()
 
 
 def parse_arguments():
