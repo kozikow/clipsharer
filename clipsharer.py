@@ -1,3 +1,4 @@
+
 import argparse
 import logging
 import socket
@@ -13,8 +14,6 @@ MAX_CLIPBOARD_SIZE = 8192
 logger = logging.getLogger("clipsharer")
 out = logging.StreamHandler(sys.stdout)
 logger.addHandler(out)
-
-mutex = threading.Lock()
 
 
 class ReceiverThread(threading.Thread):
@@ -56,10 +55,10 @@ class SenderThread(threading.Thread):
 def parse_arguments():
   parser = argparse.ArgumentParser(
     description='Application for sharing clipboard')
-  group = parser.add_mutually_exclusive_group()
-  group.add_argument("-s", "--server", action="store_true")
-  group.add_argument("-c", "--client", action="store_true")
-  parser.add_argument('-d', "--debug", action='store_true')
+  group = parser.add_mutually_exclusive_group(required=True)
+  group.add_argument("-s", "--server", action="store_true", help="Run as server")
+  group.add_argument("-c", "--client", action="store_true", help="Run as client")
+  parser.add_argument('-d', "--debug", action='store_true', help="Run as debug")
   parser.add_argument("hostname")
   parser.add_argument("port", default=32872)
   return parser.parse_args()
