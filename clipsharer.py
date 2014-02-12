@@ -1,4 +1,3 @@
-
 import argparse
 import logging
 import socket
@@ -55,18 +54,6 @@ class SenderThread(threading.Thread):
       time.sleep(0.1)
 
 
-def parse_arguments():
-  parser = argparse.ArgumentParser(
-    description='Application for sharing clipboard')
-  group = parser.add_mutually_exclusive_group(required=True)
-  group.add_argument("-s", "--server", action="store_true", help="Run as server")
-  group.add_argument("-c", "--client", action="store_true", help="Run as client")
-  parser.add_argument('-d', "--debug", action='store_true', help="Run as debug")
-  parser.add_argument("hostname")
-  parser.add_argument("port", default=32872)
-  return parser.parse_args()
-
-
 def run_server(hostname, port):
   sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   logger.debug("Creating socket on hostname %s and port %d" % (
@@ -86,6 +73,18 @@ def run_client(hostname, port):
   logger.debug("Connected to server")
   SenderThread(sock).run()
   ReceiverThread(sock).run()
+
+
+def parse_arguments():
+  parser = argparse.ArgumentParser(
+    description='Application for sharing clipboard')
+  group = parser.add_mutually_exclusive_group(required=True)
+  group.add_argument("-s", "--server", action="store_true", help="Run as server")
+  group.add_argument("-c", "--client", action="store_true", help="Run as client")
+  parser.add_argument('-d', "--debug", action='store_true', help="Run as debug")
+  parser.add_argument("hostname")
+  parser.add_argument("port", default=32872)
+  return parser.parse_args()
 
 
 if __name__ == '__main__':
