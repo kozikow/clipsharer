@@ -18,16 +18,16 @@ mutex = threading.Lock()
 
 
 class ReceiverThread(threading.Thread):
-  def __init__(self, socket):
+  def __init__(self, sock):
     threading.Thread.__init__(self)
-    self.socket = socket
+    self.sock = sock
 
   def run(self):
     while True:
       logger.debug("Waiting for clipboard on socket in recv.")
       new_clipboard = self.sock.recv(MAX_CLIPBOARD_SIZE)
       if (len(new_clipboard) == 0):
-        self.socket.shutdown()
+        self.sock.shutdown()
         return True
       mutex.acquire()
       logger.debug("Received clipboard from server: %s" % new_clipboard)
