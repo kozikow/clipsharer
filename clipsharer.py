@@ -37,6 +37,7 @@ class ReceiverThread(threading.Thread):
 
 class SenderThread(threading.Thread):
   def __init__(self, sock):
+    threading.Thread.__init__(self)
     self.sock = sock
 
   def run(self):
